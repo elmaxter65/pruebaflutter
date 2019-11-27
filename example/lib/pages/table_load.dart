@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:example/bar_chart/simple.dart';
+import 'package:example/firebase/funciones_firebase.dart';
 import 'package:example/pie_chart/simple.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -8,23 +9,18 @@ import 'package:http/http.dart' as http;
 import 'simple_table.dart';
 
 class RootPage extends StatelessWidget {
-  RootPage(this.date1, this.date2, this.data, this.json);
+  RootPage(this.date1, this.date2, this.data);
 
   DateTime date1;
   DateTime date2;
-  List data;
-  var json;
+  var data;
 
-  Future<List> getData() async {
-    var url = "http://127.0.0.1/my_store/getdata.php";
-    final response = await http.post(url, body: {
-      "consultoritem": data,
-      "fecha_ini": date1,
-      "fecha_final": date2
-    });
-    var json1 = jsonDecode('[{"no_usuario":"Cargando"}]');
-    return jsonDecode(json1);
-  }
+
+void initState(){
+
+
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +45,11 @@ class RootPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            SimpleTable(json),
-            SimpleBarChart.withRandomData(json),
-            SimplePieChart.withRandomData(json)
-          ],
+            SimpleTable(data),
+            SimpleBarChart.withRandomData(data),
+            SimplePieChart.withRandomData(data),
+
+        ],
         ),
       ),
     );

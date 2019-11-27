@@ -46,8 +46,7 @@ class SimpleBarChart extends StatelessWidget {
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData(json) {
-    List fjson=json;
-    var data;
+
     final random = new Random();
 
     final data1 = [
@@ -56,11 +55,7 @@ class SimpleBarChart extends StatelessWidget {
       new OrdinalSales('2016', random.nextInt(100)),
       new OrdinalSales('2017', random.nextInt(100)),
     ];
-    for(int i=0;i<fjson.length;i++)
-      {
-        data = new OrdinalSales(fjson[i]["no_usuario"], 32000);
-        print(data);
-      }
+
 
     return [
       new charts.Series<OrdinalSales, String>(

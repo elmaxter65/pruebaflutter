@@ -13,17 +13,21 @@ import 'package:json_table/json_table.dart';
  */
 
 class SimpleTable extends StatefulWidget {
-  SimpleTable(this.json);
-  var json;
+  SimpleTable(this.json1);
+  var json1;
   @override
-  _SimpleTableState createState() => _SimpleTableState();
+  _SimpleTableState createState() => _SimpleTableState(json1);
 }
 
 class _SimpleTableState extends State<SimpleTable> {
-  var json;
+  _SimpleTableState(this.json1);
+  var json1='';
+  //var jsons =json.decode('[{"Agente":"Cargando","Periodo":"false","Ganancia neta":"false","Costo fijo":"false","Comision":"false","Beneficio":"false"},{"Agente":"Cargando","Periodo":"false","Ganancia neta":"false","Costo fijo":"false","Comision":"false","Beneficio":"false"},{"Agente":"Cargando","Periodo":"false","Ganancia neta":"false","Costo fijo":"false","Comision":"false","Beneficio":"false"}]');
+  var jsons;
+
 
   void initState () {
-    json=widget.json;
+    jsons=json.decode(json1);
   }
   bool toggle = true;
 
@@ -37,9 +41,9 @@ class _SimpleTableState extends State<SimpleTable> {
         child: toggle
             ? Column(
                 children: [
-
+  //            for(int i=0;i<5;i++)
                   JsonTable(
-                    json,
+                    jsons,
                    // showColumnToggle: true,
                     tableHeaderBuilder: (String header) {
                       return Container(
@@ -80,11 +84,10 @@ class _SimpleTableState extends State<SimpleTable> {
                   SizedBox(
                     height: 40.0,
                   ),
-
                 ],
               )
             : Center(
-                child: Text(getPrettyJSONString(json)),
+                child: Text(getPrettyJSONString(jsons)),
               ),
       ),
     );
@@ -92,7 +95,7 @@ class _SimpleTableState extends State<SimpleTable> {
 
   String getPrettyJSONString(jsonObject) {
     JsonEncoder encoder = new JsonEncoder.withIndent('  ');
-    String jsonString = encoder.convert(json.decode(jsonObject));
+    String jsonString = encoder.convert(jsons.decode(jsonObject));
     return jsonString;
   }
 }

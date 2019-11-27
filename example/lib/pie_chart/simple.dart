@@ -46,8 +46,6 @@ class SimplePieChart extends StatelessWidget {
 
   /// Create random data.
   static List<charts.Series<LinearSales, int>> _createRandomData(json) {
-    List fjson=json;
-    var data;
     final random = new Random();
 
     final data1 = [
@@ -57,10 +55,6 @@ class SimplePieChart extends StatelessWidget {
       new LinearSales(3, random.nextInt(100)),
     ];
 
-    for(int i=0;i<fjson.length;i++)
-    {
-      //data = new LinearSales(fjson[i]["no_usuario"], 32000);
-    }
 
 
     return [
