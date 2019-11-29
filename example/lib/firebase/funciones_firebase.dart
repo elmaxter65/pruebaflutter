@@ -20,13 +20,13 @@ class FirebaseDemoScreen {
   }
 
   getData() {
-    return databaseReference.reference().child("cao_usuario").limitToFirst(10);
+    print(databaseReference.reference().child("cao_usuario").limitToFirst(1).orderByKey().once().asStream());
+    return databaseReference.reference().child("cao_usuario").limitToFirst(1).orderByKey().once().asStream();
   }
   getDatauser() {
     return databaseReference.reference().child("permissao_sistem").limitToFirst(10);
   }
   getDataconsulta(List agentes) {
-    print("mostramos");
     var jsones = '';
     String dato = '[';
     String datos = '';

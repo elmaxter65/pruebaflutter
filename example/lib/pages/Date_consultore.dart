@@ -79,21 +79,7 @@ class _ListTestState extends State<ListTest> {
         title: _buildTitle(context),
 
       ),
-      body: new FirebaseAnimatedList(
-        key: new ValueKey<bool>(_anchorToBottom),
-        query: fire.getData(),
-        reverse: _anchorToBottom,
-        sort: _anchorToBottom
-            ? (DataSnapshot a, DataSnapshot b) => b.key.compareTo(a.key)
-            : null,
-        itemBuilder: (BuildContext context, DataSnapshot snapshot,
-            Animation<double> animation, int index) {
-          return new SizeTransition(
-            sizeFactor: animation,
-            child: showUser(snapshot),
-          );
-        },
-      ),
+      body: prueba(),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.grid_on),
             onPressed: () {
@@ -107,8 +93,34 @@ class _ListTestState extends State<ListTest> {
     );
 
   }
+
+  FirebaseAnimatedList prueba ()
+  {
+    DataSnapshot snapshot;
+    FirebaseAnimatedList resulta=  new FirebaseAnimatedList(
+      key: new ValueKey<bool>(_anchorToBottom),
+      query: fire.getDatauser(),
+      reverse: _anchorToBottom,
+      itemBuilder: (BuildContext context, DataSnapshot snapshot,
+          Animation<double> animation, int index) {
+
+        return new SizeTransition(
+          sizeFactor: animation,
+          child: showUser(snapshot),
+        );
+      },
+    );
+
+     return resulta;
+  }
+
   Widget showUser(DataSnapshot res) {
-    Caousuario user = Caousuario.fromSnapshot(res);
+    Caopermissao permiso = Caopermissao.fromSnapshot(res);
+    Caousuario user = Caousuario.fromSnapshot(fire.getData());
+
+    print(res.value);
+
+
   var item = new Card(
     child: new Container(
         child: new Center(
@@ -166,10 +178,11 @@ class _ListTestState extends State<ListTest> {
 
 
   }
-  Widget showpermiso(DataSnapshot res, Caousuario user) {
-    Caopermissao permiso = Caopermissao.fromSnapshot(res);
-    print(permiso);
-    new FirebaseAnimatedList(
+  FirebaseAnimatedList showpermiso(DataSnapshot res) {
+    Caousuario user = Caousuario.fromSnapshot(res);
+
+    //Caopermissao permiso = Caopermissao.fromSnapshot(res);
+   return FirebaseAnimatedList(
       key: new ValueKey<bool>(_anchorToBottom),
       query: fire.getDatauser(),
       reverse: _anchorToBottom,
@@ -178,68 +191,13 @@ class _ListTestState extends State<ListTest> {
           : null,
       itemBuilder: (BuildContext context, DataSnapshot snapshot,
           Animation<double> animation, int index) {
+        print(snapshot.value);
         return new SizeTransition(
           sizeFactor: animation,
           child: showUser(snapshot),
         );
       },
     );
-    if(permiso.co_usuario==user.co_usuario) {
-      var item = new Card(
-        child: new Container(
-            child: new Center(
-              child: new Row(
-                children: <Widget>[
-                  new CircleAvatar(
-                    radius: 30.0,
-                    child: new Text("F"),
-                    backgroundColor: const Color(0xFF20283e),
-                  ),
-
-                  new Expanded(
-                    child: new Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Text(
-                            user.no_usuario,
-
-                            // set some style to text
-                            style: new TextStyle(
-                                fontSize: 20.0, color: Colors.lightBlueAccent),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  new Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new IconButton(
-                        icon: const Icon(
-                          Icons.check,
-                          color: const Color(0xFF167F67),
-                        ),
-                        onPressed: () => data.add(user),
-                      ),
-                      new IconButton(
-                        icon: const Icon(Icons.delete_forever,
-                            color: const Color(0xFF167F67)),
-                        onPressed: () => data.remove(user),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
-      );
-
-
-      return item;
-    }
-    return null;
   }
 
 
